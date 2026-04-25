@@ -1,0 +1,59 @@
+-- Day 01 - PostgreSQL Introduction
+-- Goal: Learn database basics and first SQL operations
+
+
+-- What is a Database
+-- A database is an organized collection of data stored in tables (rows and columns).
+
+
+-- DBMS vs RDBMS
+-- DBMS: Software to store and manage data
+-- RDBMS: Stores data in relational tables (PostgreSQL, MySQL, Oracle)
+
+
+-- SQL vs PostgreSQL
+-- SQL is a language used to interact with databases
+-- PostgreSQL is a database system that uses SQL
+
+
+-- Create Database
+CREATE DATABASE student_db;
+
+
+-- Connect to database (psql command, not SQL)
+-- \c student_db
+
+
+-- Create Table
+CREATE TABLE students (
+    student_id INT,
+    name VARCHAR(100),
+    age INT,
+    city VARCHAR(100)
+);
+
+
+-- Insert Data
+INSERT INTO students (student_id, name, age, city)
+(1, 'Ram', 22, 'Kathmandu'),
+(2, 'Sita', 21, 'Lalitpur'),
+(3, 'Hari', 23, 'Bhaktapur'),
+(4, 'Gita', 20, 'Pokhara');
+
+
+-- Read Data
+SELECT * FROM students;
+
+
+-- Basic psql Commands
+-- \l  → list databases
+-- \c student_db → connect database
+-- \dt → list tables
+-- \d students → describe table
+
+
+-- Key Learning
+-- 1. Create database first
+-- 2. Create table inside database
+-- 3. Insert data into table
+-- 4. Use SELECT to read data
