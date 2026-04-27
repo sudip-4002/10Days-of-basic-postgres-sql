@@ -1,0 +1,110 @@
+-- Day 02 - Data Modification & Filtering
+-- Goal: Learn how to manipulate and filter data using SQL
+
+
+-- Create Employee table
+CREATE TABLE employee (
+    employee_id SERIAL PRIMARY KEY,
+    first_name VARCHAR(100) NOT NULL,
+    last_name VARCHAR(100) NOT NULL,
+    department VARCHAR(50),
+    salary DECIMAL(10,2),
+    hire_date DATE DEFAULT CURRENT_DATE
+);
+
+
+-- Insert Data
+INSERT INTO employee (first_name, last_name, department, salary)
+VALUES 
+('Sagar', 'Shrestha', 'IT', 50000),
+('Pooja', 'Karki', 'HR', 45000),
+('Ramesh', 'Adhikari', 'IT', 55000),
+('Bina', 'Thapa', 'Finance', 60000),
+('Sunita', 'Gurung', 'HR', 47000),
+('Dipesh', 'Poudel', 'Marketing', 52000),
+('Nisha', 'Rai', 'IT', 48000),
+('Kiran', 'Bhattarai', 'IT', 53000),
+('Anita', 'Lama', 'Finance', 61000),
+('Suresh', 'Basnet', 'Marketing', 50000);
+
+
+-- Read all data
+SELECT * FROM employee;
+
+
+-- UPDATE example
+UPDATE employee
+SET salary = 55000
+WHERE employee_id = 1;
+
+
+-- DELETE example
+DELETE FROM employee
+WHERE employee_id = 10;
+
+
+-- WHERE clause examples
+SELECT * FROM employee
+WHERE department = 'IT';
+
+SELECT * FROM employee
+WHERE salary > 50000;
+
+
+-- AND / OR
+SELECT * FROM employee
+WHERE department = 'IT' AND salary > 50000;
+
+SELECT * FROM employee
+WHERE department = 'HR' OR department = 'Finance';
+
+
+-- IN operator
+SELECT * FROM employee
+WHERE department IN ('IT', 'HR');
+
+
+-- BETWEEN operator
+SELECT * FROM employee
+WHERE salary BETWEEN 45000 AND 60000;
+
+
+-- LIKE patterns
+SELECT * FROM employee
+WHERE first_name LIKE 'S%';   -- starts with S
+
+SELECT * FROM employee
+WHERE first_name LIKE '%a';   -- ends with a
+
+SELECT * FROM employee
+WHERE first_name LIKE '%i%';  -- contains i
+
+
+-- DISTINCT values
+SELECT DISTINCT department FROM employee;
+
+
+-- ORDER BY
+SELECT * FROM employee
+ORDER BY salary ASC;
+
+SELECT * FROM employee
+ORDER BY salary DESC;
+
+
+-- LIMIT
+SELECT * FROM employee
+LIMIT 5;
+
+
+-- Key Learning
+-- INSERT adds data
+-- UPDATE modifies data (use WHERE)
+-- DELETE removes data (use WHERE carefully)
+-- WHERE filters records
+-- AND / OR combine conditions
+-- IN and BETWEEN simplify filtering
+-- LIKE is used for pattern matching
+-- DISTINCT removes duplicates
+-- ORDER BY sorts data
+-- LIMIT restricts output
