@@ -1,0 +1,298 @@
+-- Day 04 - Aggregations & Grouping
+
+-- Goal:
+-- Learn how to summarize and analyze data using SQL aggregate functions
+
+
+-- Create Employees Table
+
+CREATE TABLE employees (
+    employee_id SERIAL PRIMARY KEY,
+    first_name VARCHAR(100),
+    last_name VARCHAR(100),
+    department VARCHAR(50),
+    salary DECIMAL(10,2),
+    experience_years INT,
+    city VARCHAR(100)
+);
+
+
+-- Insert Employee Data
+
+INSERT INTO employees 
+(first_name, last_name, department, salary, experience_years, city)
+VALUES
+('Sagar', 'Shrestha', 'IT', 75000, 5, 'Kathmandu'),
+('Pooja', 'Karki', 'HR', 50000, 3, 'Lalitpur'),
+('Ramesh', 'Adhikari', 'IT', 82000, 6, 'Bhaktapur'),
+('Bina', 'Thapa', 'Finance', 91000, 8, 'Pokhara'),
+('Sunita', 'Gurung', 'HR', 54000, 4, 'Kathmandu'),
+('Dipesh', 'Poudel', 'Marketing', 62000, 5, 'Chitwan'),
+('Nisha', 'Rai', 'IT', 73000, 4, 'Lalitpur'),
+('Kiran', 'Bhattarai', 'IT', 68000, 3, 'Kathmandu'),
+('Anita', 'Lama', 'Finance', 98000, 9, 'Pokhara'),
+('Suresh', 'Basnet', 'Marketing', 59000, 4, 'Butwal'),
+('Amit', 'Sharma', 'Sales', 45000, 2, 'Biratnagar'),
+('Ritu', 'KC', 'Sales', 47000, 2, 'Kathmandu'),
+('Nabin', 'Maharjan', 'Finance', 88000, 7, 'Lalitpur'),
+('Roshan', 'Shahi', 'IT', 79000, 5, 'Bhaktapur'),
+('Priya', 'Joshi', 'HR', 52000, 3, 'Dharan');
+
+
+-- View All Employee Data
+
+SELECT * FROM employees;
+
+
+-- COUNT()
+-- Count total employees
+
+SELECT COUNT(*) AS total_employees
+FROM employees;
+
+
+-- Count employees from IT department
+
+SELECT COUNT(*) AS total_it_employees
+FROM employees
+WHERE department = 'IT';
+
+
+-- Count employees from Kathmandu
+
+SELECT COUNT(*) AS kathmandu_employees
+FROM employees
+WHERE city = 'Kathmandu';
+
+
+-- SUM()
+-- Calculate total salary expense
+
+SELECT SUM(salary) AS total_salary
+FROM employees;
+
+
+-- Total salary paid to IT department
+
+SELECT SUM(salary) AS total_it_salary
+FROM employees
+WHERE department = 'IT';
+
+
+-- AVG()
+-- Average salary of all employees
+
+SELECT AVG(salary) AS average_salary
+FROM employees;
+
+
+-- Average salary of Finance department
+
+SELECT AVG(salary) AS finance_avg_salary
+FROM employees
+WHERE department = 'Finance';
+
+
+-- MIN()
+-- Find minimum salary
+
+SELECT MIN(salary) AS minimum_salary
+FROM employees;
+
+
+-- MAX()
+-- Find maximum salary
+
+SELECT MAX(salary) AS maximum_salary
+FROM employees;
+
+
+-- Employee with highest salary
+
+SELECT *
+FROM employees
+WHERE salary = (
+    SELECT MAX(salary)
+    FROM employees
+);
+
+
+-- Employee with lowest salary
+
+SELECT *
+FROM employees
+WHERE salary = (
+    SELECT MIN(salary)
+    FROM employees
+);
+
+
+-- GROUP BY
+-- Department-wise employee count
+
+SELECT
+    department,
+    COUNT(*) AS total_employees
+FROM employees
+GROUP BY department;
+
+
+-- Department-wise average salary
+
+SELECT
+    department,
+    AVG(salary) AS average_salary
+FROM employees
+GROUP BY department;
+
+
+-- Department-wise highest salary
+
+SELECT
+    department,
+    MAX(salary) AS highest_salary
+FROM employees
+GROUP BY department;
+
+
+-- Department-wise minimum salary
+
+SELECT
+    department,
+    MIN(salary) AS minimum_salary
+FROM employees
+GROUP BY department;
+
+
+-- Department-wise total salary expense
+
+SELECT
+    department,
+    SUM(salary) AS total_salary
+FROM employees
+GROUP BY department;
+
+
+-- City-wise employee count
+
+SELECT
+    city,
+    COUNT(*) AS total_employees
+FROM employees
+GROUP BY city;
+
+
+-- City-wise average salary
+
+SELECT
+    city,
+    AVG(salary) AS average_salary
+FROM employees
+GROUP BY city;
+
+
+-- GROUP BY multiple columns
+
+SELECT
+    department,
+    city,
+    COUNT(*) AS employee_count
+FROM employees
+GROUP BY department, city
+ORDER BY department;
+
+
+-- HAVING
+-- Departments with average salary greater than 70000
+
+SELECT
+    department,
+    AVG(salary) AS average_salary
+FROM employees
+GROUP BY department
+HAVING AVG(salary) > 70000;
+
+
+-- Departments having more than 2 employees
+
+SELECT
+    department,
+    COUNT(*) AS total_employees
+FROM employees
+GROUP BY department
+HAVING COUNT(*) > 2;
+
+
+-- Cities with total salary greater than 150000
+
+SELECT
+    city,
+    SUM(salary) AS total_salary
+FROM employees
+GROUP BY city
+HAVING SUM(salary) > 150000;
+
+
+-- Real World Salary Analysis
+
+-- Find total employees, average salary,
+-- minimum salary and maximum salary department-wise
+
+SELECT
+    department,
+    COUNT(*) AS total_employees,
+    AVG(salary) AS average_salary,
+    MIN(salary) AS minimum_salary,
+    MAX(salary) AS maximum_salary,
+    SUM(salary) AS total_salary
+FROM employees
+GROUP BY department
+ORDER BY total_salary DESC;
+
+
+-- Find departments where average experience is greater than 4 years
+
+SELECT
+    department,
+    AVG(experience_years) AS average_experience
+FROM employees
+GROUP BY department
+HAVING AVG(experience_years) > 4;
+
+
+-- Find top 3 highest paid employees
+
+SELECT
+    first_name,
+    last_name,
+    department,
+    salary
+FROM employees
+ORDER BY salary DESC
+LIMIT 3;
+
+
+-- Find employees earning above average salary
+
+SELECT
+    first_name,
+    department,
+    salary
+FROM employees
+WHERE salary > (
+    SELECT AVG(salary)
+    FROM employees
+);
+
+
+-- Key Learning
+
+-- COUNT() counts records
+-- SUM() calculates total values
+-- AVG() calculates average values
+-- MIN() returns smallest value
+-- MAX() returns largest value
+
+-- GROUP BY groups similar records
+-- HAVING filters grouped data
+-- Aggregate functions are heavily used in Data Science and Analytics
