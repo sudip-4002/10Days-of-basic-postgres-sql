@@ -1,4 +1,4 @@
-# Day 01 - PostgreSQL Introduction 🚀
+# Day 01 - PostgreSQL Introduction 
 
 ## Topics Covered
 - Database fundamentals
